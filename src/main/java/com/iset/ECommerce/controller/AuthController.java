@@ -20,10 +20,12 @@ public class AuthController {
 
 //    verify the client have a valid token
     @GetMapping
-    public ResponseEntity<Boolean> verifyToken(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> verifyToken(@RequestHeader("Authorization") String token) {
         try {
-            boolean res = jwtTokenService.validateToken(token);
-            if (res) return ResponseEntity.ok(res);
+            System.out.println(token);
+//            boolean res = jwtTokenService.validateToken(token);
+            String res = jwtTokenService.getUserRoleFromToken(token);
+            if (res != null) return ResponseEntity.ok(res);
             return ResponseEntity.status(401).build();
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
