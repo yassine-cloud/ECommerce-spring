@@ -41,6 +41,6 @@ public class Produit {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY, value = "categorie")  // Only expose the name of the category, not the full object
     public String getCategorieName() {
-        return categorie != null ? categorie.getNom() : null;
+        return categorie != null ? categorie.getId() : null;
     }
 }

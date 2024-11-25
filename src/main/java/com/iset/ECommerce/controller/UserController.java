@@ -85,6 +85,21 @@ public class UserController {
 
     }
 
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody @Valid User user, @RequestHeader("Authorization") String token) {
+        try
+        {
+            if (!jwtTokenService.isAdmin(token) && !jwtTokenService.getUserIdFromToken(token).equals(user.getId())) {
+                return ResponseEntity.status(401).build();
+            }
+            return ResponseEntity.ok(userService.updateUser(user));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(409).build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable String id, @RequestHeader("Authorization") String token) {
         try
